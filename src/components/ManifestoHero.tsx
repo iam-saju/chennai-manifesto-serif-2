@@ -10,11 +10,11 @@ const ManifestoHero = () => {
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10 !w-full !h-[507px]">
-        <div className="mb-2 !block !py-[49px]">
+        <div className="mb-2 !block !py-[49px] !w-full !h-[428px]">
           <img
             src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/7812d2c3-5e27-4241-b46b-e59b14fe0fc0/visual-edit-uploads/1759178672907-3jj3793q6wh.jpg"
             alt="The Chennai Compute Company"
-            className="mx-auto h-16 md:h-20 lg:h-24 object-cover !w-[600px] !max-w-[600px]" />
+            className="mx-auto h-16 md:h-20 object-cover !w-[600px] lg:!h-[403px] !max-w-[600px]" />
 
         </div>
         
