@@ -12,9 +12,9 @@ const ManifestoHero = () => {
       <div className="container mx-auto px-6 text-center relative z-10 pt-8 md:pt-12 pb-8">
         <div className="mb-8 flex justify-center">
           <img
-            src="/hero-image.png"
+            src="/hero1.jpg"
             alt="The Chennai Compute Company"
-            className="w-full max-w-4xl h-auto object-contain" />
+            className="w-full max-w-2xl h-auto object-contain" />
         </div>
         
         <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-manifesto-text leading-none lg:text-pink-900 mt-16 md:mt-24 lg:mt-32">
