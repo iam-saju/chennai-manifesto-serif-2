@@ -14,7 +14,7 @@ const ManifestoHero = () => {
           <img
             src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/7812d2c3-5e27-4241-b46b-e59b14fe0fc0/visual-edit-uploads/1759178672907-3jj3793q6wh.jpg"
             alt="The Chennai Compute Company"
-            className="mx-auto h-12 md:h-16 object-cover !w-[490px] lg:!h-full !max-w-[490px]" />
+            className="mx-auto h-16 md:h-20 lg:h-24 object-cover !w-[600px] !max-w-[600px]" />
 
         </div>
         
