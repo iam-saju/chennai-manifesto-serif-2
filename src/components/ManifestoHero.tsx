@@ -14,7 +14,7 @@ const ManifestoHero = () => {
           <img
             src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/7812d2c3-5e27-4241-b46b-e59b14fe0fc0/visual-edit-uploads/1759178672907-3jj3793q6wh.jpg"
             alt="The Chennai Compute Company"
-            className="mx-auto h-16 md:h-20 object-cover w-[600px] lg:h-[411px] max-w-[600px]" />
+            className="mx-auto h-16 md:h-20 object-cover !w-[45%] lg:!h-[442px] !max-w-[45%]" />
         </div>
         
         <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-manifesto-text leading-none lg:text-pink-900 w-full h-[125px] my-1.5 py-[57px]">
