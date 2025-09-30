@@ -10,7 +10,7 @@ const ManifestoHero = () => {
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10 !w-full !h-[507px]">
-        <div className="mb-2">
+        <div className="mb-2 !block !py-[49px]">
           <img
             src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/7812d2c3-5e27-4241-b46b-e59b14fe0fc0/visual-edit-uploads/1759178672907-3jj3793q6wh.jpg"
             alt="The Chennai Compute Company"
@@ -18,7 +18,7 @@ const ManifestoHero = () => {
 
         </div>
         
-        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-manifesto-text leading-none lg:!text-pink-900 !w-full !h-[125px]">
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-manifesto-text leading-none lg:!text-pink-900 !w-full !h-[125px] !my-1.5 !py-[57px]">
           <span className="block text-manifesto-muted text-2xl md:text-3xl font-light mb-4">The</span>
           <span className="!bg-[url(https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/7812d2c3-5e27-4241-b46b-e59b14fe0fc0/visual-edit-uploads/1759178845989-xf3ielt6pjg.png)] !bg-cover !bg-center !bg-none !text-emerald-500">Manifesto</span>
         </h1>
