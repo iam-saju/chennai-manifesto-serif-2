@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 interface ManifestoContentProps {
   onComplete?: (isComplete: boolean) => void;
+  isSolarized?: boolean;
 }
 
-const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
+const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [visibleElements, setVisibleElements] = useState<number[]>([]);
@@ -68,7 +69,9 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
   }, [manifestoLines.length, onComplete]);
 
   return (
-    <section className="bg-black py-20">
+    <section className={`pt-4 md:pt-8 pb-24 md:pb-40 transition-colors duration-500 ${
+      isSolarized ? 'bg-solarized-base' : 'bg-black'
+    }`}>
       {/* Letter paper effect - subtle background texture */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200"></div>
@@ -83,29 +86,39 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
         }}></div>
       </div>
 
-      <div className="container mx-auto px-6 max-w-4xl relative z-10 py-40 md:py-40">
+      <div className="container mx-auto px-4 md:px-6 max-w-4xl relative z-10 py-4 md:py-8">
         {/* Manifesto Header */}
-        <div className="text-center mb-16">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-none mb-4">
-            <span className="block text-gray-400 text-2xl md:text-3xl font-light mb-4">The</span>
-            <span className="text-emerald-500">Manifesto</span>
+        <div className="text-center mb-16 md:mb-24 pb-8 md:pb-12 mt-8 md:mt-12">
+          <h1 className={`font-serif text-2xl md:text-5xl lg:text-6xl font-bold leading-none mb-4 transition-colors duration-500 ${
+            isSolarized ? 'text-red-700' : 'text-white'
+          }`}>
+            <span className={`block text-lg md:text-3xl font-light mb-4 transition-colors duration-500 ${
+              isSolarized ? 'text-orange-600' : 'text-gray-400'
+            }`}>The</span>
+            <span className={`transition-colors duration-500 ${
+              isSolarized ? 'text-red-600' : 'text-emerald-500'
+            }`}>Purpose</span>
           </h1>
         </div>
         
-        <div className="border-l-4 border-green-500 pl-12 py-8">
+        <div className={`border-l-4 pl-4 md:pl-12 py-4 md:py-8 transition-colors duration-500 ${
+          isSolarized ? 'border-red-500' : 'border-green-500'
+        }`}>
           {/* Letter salutation - appears at 35% */}
-          <p className={`text-xl text-gray-400 mb-8 font-light font-serif transition-all duration-1000 ease-out ${
-            visibleElements.includes(0) ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
-          }`}>
+          <p className={`text-lg md:text-xl mb-4 md:mb-8 font-light font-serif transition-all duration-1000 ease-out ${
+            isSolarized ? 'text-orange-600' : 'text-gray-400'
+          } ${visibleElements.includes(0) ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'}`}>
             To the Future,
           </p>
           
           {/* Letter content - each line appears every 5% starting from 42% */}
-          <div className="space-y-8 text-white font-serif tracking-tight">
+          <div className={`space-y-4 md:space-y-8 font-serif tracking-tight transition-colors duration-500 mt-4 md:mt-8 pb-8 md:pb-12 ${
+            isSolarized ? 'text-red-800' : 'text-white'
+          }`}>
             {manifestoLines.map((line, idx) => (
               <p 
                 key={idx} 
-                className={`text-lg leading-relaxed transition-all duration-1000 ease-out ${
+                className={`text-base md:text-lg leading-relaxed transition-all duration-1000 ease-out ${
                   visibleElements.includes(idx + 1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
               >
@@ -123,21 +136,21 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
           <div className={`flex items-end justify-between mt-12 transition-all duration-1000 ease-out ${
             visibleElements.includes(manifestoLines.length + 2) || visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
-            {/* Signature on the left */}
-            <img
-              src="/chensign.jpeg"
-              alt="Signature"
-              className={`h-12 md:h-16 w-auto object-contain transition-all duration-1000 ease-out ${
-                visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-              }`}
-              onError={(e) => {
-                console.log('Signature image failed to load');
-                e.currentTarget.style.display = 'none';
-              }}
-            />
+                        {/* Signature on the left */}
+                        <img
+                          src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
+                          alt="Signature"
+                          className={`h-12 md:h-16 w-auto object-contain transition-all duration-1000 ease-out ${
+                            visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                          }`}
+                          onError={(e) => {
+                            console.log('Signature image failed to load');
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
             {/* Stamp on the right */}
             <img
-              src="/stamp.jpeg"
+              src={isSolarized ? "/Untitled (16) (1).jpg" : "/stamp.jpeg"}
               alt="Official stamp"
               className={`h-16 md:h-20 w-auto object-contain transition-all duration-1000 ease-out ${
                 visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
