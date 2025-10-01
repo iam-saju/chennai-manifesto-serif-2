@@ -8,6 +8,7 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background font-serif">
+
       <ManifestoHero />
       <ManifestoContent onComplete={setIsManifestoComplete} />
       {isManifestoComplete && <ManifestoFooter />}

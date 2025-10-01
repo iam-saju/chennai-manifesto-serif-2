@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 const ManifestoFooter = () => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isFormHovered, setIsFormHovered] = useState(false);
+  const [isImageClicked, setIsImageClicked] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,8 +39,6 @@ const ManifestoFooter = () => {
                 <form 
                   onSubmit={handleSubmit} 
                   className="flex flex-col sm:flex-row gap-3"
-                  onMouseEnter={() => setIsFormHovered(true)}
-                  onMouseLeave={() => setIsFormHovered(false)}
                 >
                   <Input
                     type="email"
@@ -58,9 +56,8 @@ const ManifestoFooter = () => {
                   </Button>
                 </form>
               ) : (
-                <div className="flex items-center gap-2 text-green-500">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <p className="text-sm font-medium">congrats ! you're on the list.</p>
+                <div className="mt-4 p-3 bg-gray-800/50 rounded-md border border-gray-700">
+                  <p className="text-xs text-green-500 text-center"> Added to waitlist!</p>
                 </div>
               )}
             </div>
@@ -79,11 +76,10 @@ const ManifestoFooter = () => {
             <img
               src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/7812d2c3-5e27-4241-b46b-e59b14fe0fc0/visual-edit-uploads/1759221396251-s1c5awphm8.jpg"
               alt="Thermal visualization"
-              className={`w-full max-w-xs rounded-lg transition-all duration-500 ${
-                isFormHovered 
-                  ? 'scale-110 brightness-110 shadow-2xl shadow-green-500/20' 
-                  : 'scale-100 brightness-100'
+              className={`w-full max-w-xs rounded-lg transition-all duration-300 cursor-pointer ${
+                isImageClicked ? 'opacity-30' : 'opacity-100'
               }`}
+              onClick={() => setIsImageClicked(!isImageClicked)}
               onError={(e) => {
                 console.log('External image failed to load, using fallback');
                 e.currentTarget.src = '/placeholder.svg';
