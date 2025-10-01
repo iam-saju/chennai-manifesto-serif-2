@@ -7,19 +7,7 @@ interface ManifestoContentProps {
 const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
-  const [visibleElements, setVisibleElements] = useState<{
-    salutation: boolean;
-    manifestoLines: boolean[];
-    separator: boolean;
-    signature: boolean;
-    stamp: boolean;
-  }>({
-    salutation: false,
-    manifestoLines: [false, false, false, false, false, false],
-    separator: false,
-    signature: false,
-    stamp: false
-  });
+  const [visibleElements, setVisibleElements] = useState<number[]>([]);
 
   const manifestoLines = [
     "We are The Chennai Compute Company.",
@@ -35,29 +23,40 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
-      const currentPercentage = Math.min(100, Math.max(0, scrollPercent));
-      setScrollPercentage(currentPercentage);
+      setScrollPercentage(scrollPercent);
+      
+      // Debug: log scroll percentage
+      console.log('Scroll percentage:', scrollPercent);
 
-      // Update visible elements based on scroll percentage
-      const newVisibleElements = {
-        salutation: currentPercentage >= 37,
-        manifestoLines: [
-          currentPercentage >= 41.8, // "We are The Chennai Compute Company" - appears after 4.8% more scrolling (37 + 4.8)
-          currentPercentage >= 47.8, // 41.8 + 6
-          currentPercentage >= 53.8, // 47.8 + 6
-          currentPercentage >= 59.8, // 53.8 + 6
-          currentPercentage >= 65.8, // 59.8 + 6
-          currentPercentage >= 71.8  // 65.8 + 6
-        ],
-        separator: currentPercentage >= 75.75,
-        signature: currentPercentage >= 75.75,
-        stamp: currentPercentage >= 75.75
-      };
-
+      const newVisibleElements: number[] = [];
+      
+      // "To the Future," appears at 35%
+      if (scrollPercent >= 35) {
+        newVisibleElements.push(0);
+      }
+        
+      // Each manifesto line appears every 5% starting from 42%
+      for (let i = 0; i < manifestoLines.length; i++) {
+        const threshold = 42 + (i * 5);
+        if (scrollPercent >= threshold) {
+          newVisibleElements.push(i + 1);
+        }
+      }
+      
+      // Grey line and images appear at 73%
+      if (scrollPercent >= 73) {
+        newVisibleElements.push(manifestoLines.length + 1); // Grey line
+        newVisibleElements.push(manifestoLines.length + 2); // Signature
+        newVisibleElements.push(manifestoLines.length + 3); // Stamp
+      }
+      
       setVisibleElements(newVisibleElements);
+      
+      // Debug: log visible elements
+      console.log('Visible elements:', newVisibleElements);
 
-      // Mark as complete when reaching 75.75%
-      if (currentPercentage >= 75.75) {
+      // Mark as complete when reaching 80%
+      if (scrollPercent >= 80) {
         onComplete?.(true);
       }
     };
@@ -66,7 +65,7 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
     handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [onComplete]);
+  }, [manifestoLines.length, onComplete]);
 
   return (
     <section className="bg-black py-20">
@@ -94,20 +93,20 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
         </div>
         
         <div className="border-l-4 border-green-500 pl-12 py-8">
-          {/* Letter salutation - appears at 37% */}
+          {/* Letter salutation - appears at 35% */}
           <p className={`text-xl text-gray-400 mb-8 font-light font-serif transition-all duration-1000 ease-out ${
-            visibleElements.salutation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            visibleElements.includes(0) ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
           }`}>
             To the Future,
           </p>
           
-          {/* Letter content - first line at 41.8%, then every 6% */}
+          {/* Letter content - each line appears every 5% starting from 42% */}
           <div className="space-y-8 text-white font-serif tracking-tight">
             {manifestoLines.map((line, idx) => (
               <p 
                 key={idx} 
                 className={`text-lg leading-relaxed transition-all duration-1000 ease-out ${
-                  visibleElements.manifestoLines[idx] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  visibleElements.includes(idx + 1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
               >
                 {line}
@@ -115,21 +114,21 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
             ))}
           </div>
           
-          {/* Grey separator line - appears at 75.75% */}
+          {/* Grey separator line - appears at 73% */}
           <div className={`border-t border-gray-800 my-8 transition-all duration-1000 ease-out ${
-            visibleElements.separator ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+            visibleElements.includes(manifestoLines.length + 1) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
           }`}></div>
           
-          {/* Signature and stamp - appear at 75.75% */}
+          {/* Signature and stamp - appear at 73% */}
           <div className={`flex items-end justify-between mt-12 transition-all duration-1000 ease-out ${
-            visibleElements.signature && visibleElements.stamp ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            visibleElements.includes(manifestoLines.length + 2) || visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
             {/* Signature on the left */}
             <img
               src="/chensign.jpeg"
               alt="Signature"
               className={`h-12 md:h-16 w-auto object-contain transition-all duration-1000 ease-out ${
-                visibleElements.signature ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
               }`}
               onError={(e) => {
                 console.log('Signature image failed to load');
@@ -141,7 +140,7 @@ const ManifestoContent = ({ onComplete }: ManifestoContentProps) => {
               src="/stamp.jpeg"
               alt="Official stamp"
               className={`h-16 md:h-20 w-auto object-contain transition-all duration-1000 ease-out ${
-                visibleElements.stamp ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+                visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
               }`}
               onError={(e) => {
                 console.log('Stamp image failed to load');

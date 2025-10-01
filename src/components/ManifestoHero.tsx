@@ -19,9 +19,9 @@ const ManifestoHero = () => {
         
         <div className="flex justify-center">
           <img
-            src="/Untitled (5) (1).jpg"
-            alt="The Chennai Compute Company"
-            className="w-full max-w-lg h-auto object-contain rounded-lg" />
+            src="/765d4ab84d3609432554d5ef5e0df07a (1).jpg"
+            alt="The Chennai Compute Company - Digital Connection"
+            className="w-full max-w-3xl h-auto object-contain rounded-lg shadow-2xl shadow-black/50 hover:shadow-3xl hover:shadow-black/70 transition-shadow duration-300" />
         </div>
         
       </div>
