@@ -99,9 +99,9 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
       {/* Fixed canvas container */}
       <div className="sticky top-0 h-screen overflow-hidden relative z-10">
 
-        <div className="container mx-auto px-4 md:px-6 max-w-7xl relative z-10 h-full flex items-center md:items-start md:pt-20">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl relative z-10 h-full flex items-center justify-center">
         
-        <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8 md:py-0">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
           {/* Mobile: Stamp first, Desktop: Content first */}
           <div className="lg:col-span-2 flex flex-col justify-center max-w-2xl order-2 lg:order-1">
           {/* Purpose Title */}
@@ -150,7 +150,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
 
           {/* Grey separator line - appears at 75% */}
           <div 
-            className={`border-t my-0 mb-6 mt-8 md:my-12 ${
+            className={`border-t my-6 md:my-12 ${
             isSolarized ? 'border-solarized-orange/30' : 'border-gray-800'
           } ${
             visibleElements.includes(manifestoLines.length + 1) ? 'opacity-100' : 'opacity-0'
@@ -162,21 +162,21 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           
           {/* Signature - appears at 75% */}
           <div 
-            className={`${
+            className={`mb-6 md:mb-0 ${
             visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
           }`}
             style={{
               transition: 'opacity 2000ms ease-in-out'
             }}
           >
-            {/* Signature on the left - slightly bigger and vertically aligned */}
-            <div className="flex items-center">
+            {/* Signature - prominently displayed */}
+            <div className="flex items-center justify-start py-4">
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
                 loading="lazy"
                 decoding="async"
-                className={`h-10 md:h-14 lg:h-16 w-auto object-contain`}
+                className={`h-16 md:h-20 lg:h-24 w-auto object-contain`}
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
