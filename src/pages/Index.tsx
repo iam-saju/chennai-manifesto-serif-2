@@ -17,19 +17,7 @@ const Index = () => {
       <ManifestoHero isSolarized={isSolarized} />
       <ManifestoContent onComplete={setIsManifestoComplete} isSolarized={isSolarized} />
       {isManifestoComplete && (
-        <>
-          {/* Spacer between content and footer with gradient */}
-          <div className={`relative h-32 md:h-20 transition-colors duration-[800ms] ease-in-out ${
-            isSolarized ? 'bg-solarized-base' : 'bg-black'
-          }`}>
-            <div className={`absolute inset-0 bg-gradient-to-b ${
-              isSolarized 
-                ? 'from-solarized-base/50 to-solarized-base' 
-                : 'from-black/50 to-black'
-            }`}></div>
-          </div>
-          <ManifestoFooter isSolarized={isSolarized} />
-        </>
+        <ManifestoFooter isSolarized={isSolarized} />
       )}
     </main>
   );
