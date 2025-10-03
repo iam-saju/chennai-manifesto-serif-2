@@ -106,10 +106,10 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           <div className="lg:col-span-2 flex flex-col justify-center max-w-2xl order-2 lg:order-1">
           {/* Purpose Title */}
           <div className="pb-4 md:pb-12">
-            <h2 className={`font-serif text-3xl md:text-6xl lg:text-7xl font-bold leading-none transition-colors duration-800 ease-in-out ${
+            <h2 className={`font-serif text-2xl md:text-5xl lg:text-6xl font-bold leading-none transition-colors duration-800 ease-in-out ${
               isSolarized ? 'text-solarized-blue' : 'text-white'
             }`}>
-              <span className={`block text-base md:text-3xl font-light mb-2 md:mb-4 italic tracking-wide transition-colors duration-800 ease-in-out ${
+              <span className={`block text-sm md:text-2xl font-light mb-2 md:mb-4 italic tracking-wide transition-colors duration-800 ease-in-out ${
                 isSolarized ? 'text-solarized-orange' : 'text-gray-400'
               }`}>The</span> 
               <span className={`tracking-tight transition-colors duration-800 ease-in-out ${
@@ -119,7 +119,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           </div>
           {/* Letter salutation - appears at 15% */}
           <p 
-            className={`text-lg md:text-2xl mb-4 md:mb-12 font-light font-serif leading-relaxed ${
+            className={`text-base md:text-xl mb-4 md:mb-12 font-light font-serif leading-relaxed ${
             isSolarized ? 'text-solarized-orange' : 'text-gray-300'
           } ${visibleElements.includes(0) ? 'opacity-100' : 'opacity-0'}`}
             style={{
@@ -136,7 +136,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
             {manifestoLines.map((line, idx) => (
               <p 
                 key={idx} 
-                className={`text-sm md:text-xl leading-loose min-h-[1.5rem] md:min-h-[2.5rem] ${
+                className={`text-xs md:text-lg leading-loose min-h-[1.5rem] md:min-h-[2.5rem] ${
                   visibleElements.includes(idx + 1) ? 'opacity-100' : 'opacity-0'
                       }`}
                       style={{
