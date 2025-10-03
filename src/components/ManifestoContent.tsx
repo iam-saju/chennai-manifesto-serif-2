@@ -159,7 +159,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           
           {/* Signature - appears at 75% */}
           <div 
-            className={`${
+            className={`relative z-20 ${
             visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
           }`}
             style={{
@@ -167,7 +167,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
             }}
           >
             {/* Signature on the left - slightly bigger and vertically aligned */}
-            <div className="flex items-center mt-2">
+            <div className="flex items-center mt-2 mb-8 md:mb-0">
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
