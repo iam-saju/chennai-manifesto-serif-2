@@ -150,7 +150,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
 
           {/* Grey separator line - appears at 75% */}
           <div 
-            className={`border-t my-6 md:my-12 ${
+            className={`border-t mb-3 mt-6 md:my-12 ${
             isSolarized ? 'border-solarized-orange/30' : 'border-gray-800'
           } ${
             visibleElements.includes(manifestoLines.length + 1) ? 'opacity-100' : 'opacity-0'
@@ -162,7 +162,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           
           {/* Signature - appears at 75% */}
           <div 
-            className={`mb-16 md:mb-8 ${
+            className={`mt-0 mb-16 md:mt-0 md:mb-8 ${
             visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
           }`}
             style={{
@@ -170,7 +170,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
             }}
           >
             {/* Signature - appropriately sized for mobile and desktop */}
-            <div className="flex items-center justify-start py-2 md:py-3">
+            <div className="flex items-center justify-start py-0 md:py-3">
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
