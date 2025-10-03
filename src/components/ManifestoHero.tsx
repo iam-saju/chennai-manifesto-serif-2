@@ -25,6 +25,8 @@ const ManifestoHero = ({ isSolarized = false }: ManifestoHeroProps) => {
           <img
             src={isSolarized ? "/Untitled (14) (1).jpg" : "/hero-image.png"}
             alt="The Chennai Compute Company"
+            loading="eager"
+            decoding="async"
             className="w-32 h-32 md:w-72 md:h-72 object-contain" />
         </div>
         
@@ -32,6 +34,8 @@ const ManifestoHero = ({ isSolarized = false }: ManifestoHeroProps) => {
           <img
             src="/765d4ab84d3609432554d5ef5e0df07a (1).jpg"
             alt="The Chennai Compute Company - Digital Connection"
+            loading="eager"
+            decoding="async"
             className="w-full max-w-sm md:max-w-3xl h-auto object-contain rounded-lg shadow-2xl shadow-black/50 hover:shadow-3xl hover:shadow-black/70 transition-shadow duration-300" />
         </div>
         

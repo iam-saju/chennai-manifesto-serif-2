@@ -43,7 +43,7 @@ const ManifestoFooter = memo(({ isSolarized = false }: ManifestoFooterProps) => 
   }, [email]);
 
   return (
-    <section className={`py-6 md:py-10 transition-all duration-[800ms] ease-in-out relative ${
+    <section className={`py-6 md:py-10 transition-all duration-800 ease-in-out relative ${
       isSolarized 
         ? 'bg-[#F9EED0] border-solarized-violet' 
         : 'bg-zinc-900 border-gray-700'
@@ -55,25 +55,25 @@ const ManifestoFooter = memo(({ isSolarized = false }: ManifestoFooterProps) => 
           {/* Text content - vertically aligned column */}
           <div className="flex flex-col justify-between h-full space-y-4 md:space-y-6 text-center md:text-left order-2 md:order-1">
             {/* Main heading */}
-            <h2 className={`font-serif text-2xl md:text-4xl font-medium transition-colors duration-[800ms] ease-in-out ${
+            <h2 className={`font-serif text-2xl md:text-4xl font-medium transition-colors duration-800 ease-in-out ${
               isSolarized ? 'text-red-600' : 'text-white'
             }`}>
               Fuel Your Next Breakthrough
             </h2>
             
             {/* Separator line */}
-            <div className={`border-t my-2 md:my-4 transition-colors duration-[800ms] ease-in-out ${
+            <div className={`border-t my-2 md:my-4 transition-colors duration-800 ease-in-out ${
               isSolarized ? 'border-orange-400' : 'border-gray-600'
             }`}></div>
             
             {/* Waiting List Form */}
             <div className="space-y-2 md:space-y-6">
-              <h3 className={`font-serif text-base md:text-lg font-medium transition-colors duration-[800ms] ease-in-out ${
+              <h3 className={`font-serif text-base md:text-lg font-medium transition-colors duration-800 ease-in-out ${
                 isSolarized ? 'text-orange-500' : 'text-gray-200'
               }`}>
                 All providers. Real prices. Zero markup..
               </h3>
-              <p className={`text-xs md:text-sm transition-colors duration-[800ms] ease-in-out ${
+              <p className={`text-xs md:text-sm transition-colors duration-800 ease-in-out ${
                 isSolarized ? 'text-red-500' : 'text-gray-400'
               }`}>
                 Reserve your place before we go live.
@@ -125,13 +125,13 @@ const ManifestoFooter = memo(({ isSolarized = false }: ManifestoFooterProps) => 
             </div>
             
             {/* Location */}
-            <div className={`pt-6 border-t transition-colors duration-[800ms] ease-in-out ${
+            <div className={`pt-6 border-t transition-colors duration-800 ease-in-out ${
               isSolarized ? 'border-red-300' : 'border-gray-700'
             }`}>
-              <p className={`text-sm tracking-wider !whitespace-pre-line flex items-center gap-2 transition-colors duration-[800ms] ease-in-out ${
+              <p className={`text-sm tracking-wider !whitespace-pre-line flex items-center gap-2 transition-colors duration-800 ease-in-out ${
                 isSolarized ? 'text-red-600' : 'text-gray-500'
               }`}>
-                <span className={`w-2 h-2 rounded-full animate-pulse shadow-lg transition-colors duration-[800ms] ease-in-out ${
+                <span className={`w-2 h-2 rounded-full animate-pulse shadow-lg transition-colors duration-800 ease-in-out ${
                   isSolarized ? 'bg-orange-500 shadow-orange-500/50' : 'bg-green-500 shadow-green-500/50'
                 }`}></span>
                 crafted at 🌏 13.0827° N, 80.2707° E
@@ -144,6 +144,8 @@ const ManifestoFooter = memo(({ isSolarized = false }: ManifestoFooterProps) => 
             <img
               src={isSolarized ? "/Untitled (11) (1).jpg" : "/Untitled (10) (1).jpg"}
               alt="Chennai Compute Company Visualization"
+              loading="lazy"
+              decoding="async"
               className="w-full max-w-xs md:max-w-sm rounded-lg"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';

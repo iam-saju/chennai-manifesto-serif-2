@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 interface ManifestoContentProps {
   onComplete?: (isComplete: boolean) => void;
@@ -16,11 +16,13 @@ const manifestoLines = [
 
 const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentProps) => {
   const [visibleElements, setVisibleElements] = useState<number[]>([]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const completedRef = useRef(false);
 
   const handleScroll = useCallback(() => {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 
     const newVisibleElements: number[] = [];
     
@@ -46,19 +48,20 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
     
     setVisibleElements(newVisibleElements);
 
-    // Mark as complete when reaching 85%
-    if (scrollPercent >= 85) {
+    // Mark as complete when reaching 85% (only once)
+    if (scrollPercent >= 85 && !completedRef.current) {
+      completedRef.current = true;
       onComplete?.(true);
     }
   }, [onComplete]);
 
   useEffect(() => {
-    let rafId: number;
+    let rafId: number | null = null;
     const throttledHandleScroll = () => {
-      if (rafId) return;
+      if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
         handleScroll();
-        rafId = 0;
+        rafId = null;
       });
     };
 
@@ -67,12 +70,12 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
 
     return () => {
       window.removeEventListener('scroll', throttledHandleScroll);
-      if (rafId) cancelAnimationFrame(rafId);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [handleScroll]);
 
   return (
-    <section className={`h-[550vh] relative transition-all duration-[800ms] ease-in-out ${
+    <section className={`h-[550vh] relative transition-all duration-800 ease-in-out ${
         isSolarized ? 'bg-solarized-base' : 'bg-black'
     }`}>
       {/* Subtle background pattern */}
@@ -103,13 +106,13 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           <div className="lg:col-span-2 flex flex-col justify-center max-w-2xl order-2 lg:order-1">
           {/* Purpose Title */}
           <div className="pb-4 md:pb-12">
-            <h2 className={`font-serif text-3xl md:text-6xl lg:text-7xl font-bold leading-none transition-colors duration-[800ms] ease-in-out ${
+            <h2 className={`font-serif text-3xl md:text-6xl lg:text-7xl font-bold leading-none transition-colors duration-800 ease-in-out ${
               isSolarized ? 'text-solarized-blue' : 'text-white'
             }`}>
-              <span className={`block text-base md:text-3xl font-light mb-2 md:mb-4 italic tracking-wide transition-colors duration-[800ms] ease-in-out ${
+              <span className={`block text-base md:text-3xl font-light mb-2 md:mb-4 italic tracking-wide transition-colors duration-800 ease-in-out ${
                 isSolarized ? 'text-solarized-orange' : 'text-gray-400'
               }`}>The</span> 
-              <span className={`tracking-tight transition-colors duration-[800ms] ease-in-out ${
+              <span className={`tracking-tight transition-colors duration-800 ease-in-out ${
                 isSolarized ? 'text-solarized-cyan' : 'text-emerald-500'
               }`}>Purpose</span>
             </h2>
@@ -127,7 +130,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           </p>
           
           {/* Letter content - each line appears every 8% starting from 25% */}
-          <div className={`space-y-2 md:space-y-6 font-serif tracking-tight transition-colors duration-[800ms] ease-in-out ${
+          <div className={`space-y-2 md:space-y-6 font-serif tracking-tight transition-colors duration-800 ease-in-out ${
             isSolarized ? 'text-solarized-orange' : 'text-gray-200'
           }`}>
             {manifestoLines.map((line, idx) => (
@@ -171,6 +174,8 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
+                loading="lazy"
+                decoding="async"
                 className={`h-10 md:h-14 lg:h-16 w-auto object-contain`}
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -410,6 +415,8 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
               <img
                 src={isSolarized ? "/Untitled (16) (1).jpg" : "/stamp.jpeg"}
                   alt="Official stamp"
+                  loading="lazy"
+                  decoding="async"
                   className={`h-72 md:h-96 lg:h-[28rem] w-auto object-contain max-w-full drop-shadow-lg hover:scale-110 hover:drop-shadow-2xl transition-all duration-300 cursor-pointer relative z-10`}
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';

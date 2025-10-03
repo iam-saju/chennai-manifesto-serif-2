@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import ManifestoHero from "@/components/ManifestoHero";
 import ManifestoContent from "@/components/ManifestoContent";
-import ManifestoFooter from "@/components/ManifestoFooter";
 import ThemeToggle from "@/components/ThemeToggle";
+
+// Lazy load footer since it's below the fold
+const ManifestoFooter = lazy(() => import("@/components/ManifestoFooter"));
 
 const Index = () => {
   const [isManifestoComplete, setIsManifestoComplete] = useState(false);
   const [isSolarized, setIsSolarized] = useState(false);
 
   return (
-    <main className={`min-h-screen font-serif transition-colors duration-[800ms] ease-in-out scroll-smooth ${
+    <main className={`min-h-screen font-serif transition-colors duration-800 ease-in-out scroll-smooth ${
       isSolarized ? 'bg-solarized-base' : 'bg-background'
     }`}>
       <ThemeToggle onThemeChange={setIsSolarized} />
@@ -17,7 +19,9 @@ const Index = () => {
       <ManifestoHero isSolarized={isSolarized} />
       <ManifestoContent onComplete={setIsManifestoComplete} isSolarized={isSolarized} />
       {isManifestoComplete && (
-        <ManifestoFooter isSolarized={isSolarized} />
+        <Suspense fallback={<div className="h-20" />}>
+          <ManifestoFooter isSolarized={isSolarized} />
+        </Suspense>
       )}
     </main>
   );
