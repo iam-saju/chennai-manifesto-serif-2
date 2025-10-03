@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -6,17 +6,15 @@ interface ManifestoFooterProps {
   isSolarized?: boolean;
 }
 
-const ManifestoFooter = ({ isSolarized = false }: ManifestoFooterProps) => {
+const ManifestoFooter = memo(({ isSolarized = false }: ManifestoFooterProps) => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the email to your backend
-    console.log("Email submitted:", email);
     setIsSubmitted(true);
     setEmail("");
-  };
+  }, []);
 
   return (
     <section className={`py-4 md:py-10 transition-all duration-1000 ease-in-out relative ${
@@ -120,14 +118,15 @@ const ManifestoFooter = ({ isSolarized = false }: ManifestoFooterProps) => {
               alt="Chennai Compute Company Visualization"
               className="w-full max-w-xs md:max-w-sm rounded-lg"
               onError={(e) => {
-                console.log('Image failed to load, using fallback');
-                e.currentTarget.src = '/placeholder.svg';
+                e.currentTarget.style.display = 'none';
               }} />
           </div>
         </div>
       </div>
-    </section>);
+    </section>
+  );
+});
 
-};
+ManifestoFooter.displayName = 'ManifestoFooter';
 
 export default ManifestoFooter;

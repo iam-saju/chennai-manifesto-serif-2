@@ -1,74 +1,75 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 
 interface ManifestoContentProps {
   onComplete?: (isComplete: boolean) => void;
   isSolarized?: boolean;
 }
 
-const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentProps) => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [scrollPercentage, setScrollPercentage] = useState(0);
-  const [visibleElements, setVisibleElements] = useState<number[]>([]);
-  const [backgroundOffset, setBackgroundOffset] = useState(0);
+const manifestoLines = [
+  "We are The Chennai Compute Company.",
+  "We believe compute is the fundamental force shaping tomorrow. Every breakthrough begins with computational power.",
+  "From Chennai, we're building India's AI revolution. Intelligence amplified, not replaced.",
+  "We pursue relentless optimization. Every algorithm improved. Every system more efficient.",
+  "Ethics guide our design. Transparency drives our innovation. Open source accelerates our progress.",
+  "The computational future is being written today."
+];
 
-  const manifestoLines = [
-    "We are The Chennai Compute Company.",
-    "We believe compute is the fundamental force shaping tomorrow. Every breakthrough begins with computational power.",
-    "From Chennai, we're building India's AI revolution. Intelligence amplified, not replaced.",
-    "We pursue relentless optimization. Every algorithm improved. Every system more efficient.",
-    "Ethics guide our design. Transparency drives our innovation. Open source accelerates our progress.",
-    "The computational future is being written today."
-  ];
+const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentProps) => {
+  const [visibleElements, setVisibleElements] = useState<number[]>([]);
+
+  const handleScroll = useCallback(() => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+
+    const newVisibleElements: number[] = [];
+    
+    // "To the Future," appears at 15%
+    if (scrollPercent >= 15) {
+      newVisibleElements.push(0);
+    }
+      
+    // Each manifesto line appears every 8% starting from 25%
+    for (let i = 0; i < manifestoLines.length; i++) {
+      const threshold = 25 + (i * 8);
+      if (scrollPercent >= threshold) {
+        newVisibleElements.push(i + 1);
+      }
+    }
+    
+    // Grey line and images appear at 75%
+    if (scrollPercent >= 75) {
+      newVisibleElements.push(manifestoLines.length + 1); // Grey line
+      newVisibleElements.push(manifestoLines.length + 2); // Signature
+      newVisibleElements.push(manifestoLines.length + 3); // Stamp
+    }
+    
+    setVisibleElements(newVisibleElements);
+
+    // Mark as complete when reaching 85%
+    if (scrollPercent >= 85) {
+      onComplete?.(true);
+    }
+  }, [onComplete]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      setScrollPercentage(scrollPercent);
-
-      const newVisibleElements: number[] = [];
-      
-      // "To the Future," appears at 15%
-      if (scrollPercent >= 15) {
-        newVisibleElements.push(0);
-      }
-        
-      // Each manifesto line appears every 8% starting from 25%
-      for (let i = 0; i < manifestoLines.length; i++) {
-        const threshold = 25 + (i * 8);
-        if (scrollPercent >= threshold) {
-          newVisibleElements.push(i + 1);
-        }
-      }
-      
-      // Grey line and images appear at 75%
-      if (scrollPercent >= 75) {
-        newVisibleElements.push(manifestoLines.length + 1); // Grey line
-        newVisibleElements.push(manifestoLines.length + 2); // Signature
-        newVisibleElements.push(manifestoLines.length + 3); // Stamp
-        
-        // Start moving background after 75%
-        const backgroundScrollStart = 75;
-        const backgroundProgress = Math.min((scrollPercent - backgroundScrollStart) / (100 - backgroundScrollStart), 1);
-        setBackgroundOffset(backgroundProgress * 100);
-      } else {
-        setBackgroundOffset(0);
-      }
-      
-      setVisibleElements(newVisibleElements);
-
-      // Mark as complete when reaching 85%
-      if (scrollPercent >= 85) {
-        onComplete?.(true);
-      }
+    let rafId: number;
+    const throttledHandleScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        handleScroll();
+        rafId = 0;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     handleScroll(); // Initial check
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [manifestoLines.length, onComplete]);
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [handleScroll]);
 
   return (
     <section className={`h-[550vh] relative transition-all duration-1000 ease-in-out ${
@@ -156,7 +157,6 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                             transition: 'opacity 2000ms ease-in-out'
                           }}
                           onError={(e) => {
-                            console.log('Signature image failed to load');
                             e.currentTarget.style.display = 'none';
                           }}
                         />
@@ -171,7 +171,6 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 transition: 'opacity 2000ms ease-in-out'
               }}
               onError={(e) => {
-                console.log('Stamp image failed to load');
                 e.currentTarget.style.display = 'none';
               }}
             />
