@@ -19,15 +19,17 @@ const ManifestoFooter = ({ isSolarized = false }: ManifestoFooterProps) => {
   };
 
   return (
-    <section className={`py-6 md:py-10 transition-colors duration-500 ${
+    <section className={`py-4 md:py-10 transition-all duration-1000 ease-in-out relative ${
       isSolarized 
         ? 'bg-[#F9EED0] border-solarized-violet' 
         : 'bg-zinc-900 border-gray-700'
     }`}>
-      <div className="container mx-auto px-4 md:px-6">
+
+      
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-4 md:gap-8 items-end">
           {/* Text content - vertically aligned column */}
-          <div className="flex flex-col justify-between h-full space-y-4 md:space-y-6 text-center md:text-left">
+          <div className="flex flex-col justify-between h-full space-y-4 md:space-y-6 text-center md:text-left order-2 md:order-1">
             {/* Main heading */}
             <h2 className={`font-serif text-2xl md:text-4xl font-medium transition-colors duration-500 ${
               isSolarized ? 'text-red-600' : 'text-white'
@@ -112,7 +114,7 @@ const ManifestoFooter = ({ isSolarized = false }: ManifestoFooterProps) => {
           </div>
 
           {/* Image */}
-          <div className="flex justify-center md:justify-end items-end mt-4 md:mt-0">
+          <div className="flex justify-center md:justify-end items-end mt-4 md:mt-0 order-1 md:order-2">
             <img
               src={isSolarized ? "/Untitled (11) (1).jpg" : "/Untitled (10) (1).jpg"}
               alt="Chennai Compute Company Visualization"

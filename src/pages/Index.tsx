@@ -22,14 +22,22 @@ const Index = () => {
   }, []);
 
   return (
-    <main className={`min-h-screen font-serif transition-colors duration-500 ${
+    <main className={`min-h-screen font-serif transition-colors duration-500 scroll-smooth ${
       isSolarized ? 'bg-solarized-base' : 'bg-background'
     }`}>
       <ThemeToggle onThemeChange={setIsSolarized} />
       
       <ManifestoHero isSolarized={isSolarized} />
       <ManifestoContent onComplete={setIsManifestoComplete} isSolarized={isSolarized} />
-      {isManifestoComplete && <ManifestoFooter isSolarized={isSolarized} />}
+      {isManifestoComplete && (
+        <>
+          {/* Spacer between content and footer - desktop only */}
+          <div className={`hidden md:block h-20 transition-colors duration-500 ${
+            isSolarized ? 'bg-solarized-base' : 'bg-black'
+          }`}></div>
+          <ManifestoFooter isSolarized={isSolarized} />
+        </>
+      )}
     </main>
   );
 };

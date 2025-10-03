@@ -9,13 +9,18 @@ const ManifestoHero = ({ isSolarized = false }: ManifestoHeroProps) => {
     <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500 ${
       isSolarized ? 'bg-solarized-base' : 'bg-black'
     }`}>
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-16 h-16 md:w-32 md:h-32 bg-manifesto-glow rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-12 h-12 md:w-24 md:h-24 bg-manifesto-accent rounded-full blur-2xl animate-pulse delay-700"></div>
+      {/* Animated background elements - floating and moving */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none z-0">
+        <div className="absolute top-1/4 left-1/4 w-24 h-24 md:w-40 md:h-40 bg-manifesto-glow rounded-full blur-3xl animate-float-1"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-20 h-20 md:w-32 md:h-32 bg-manifesto-accent rounded-full blur-3xl animate-float-2"></div>
+        <div className="absolute top-1/2 right-1/3 w-16 h-16 md:w-24 md:h-24 bg-emerald-500 rounded-full blur-2xl animate-float-3"></div>
+        <div className="absolute top-3/4 left-1/3 w-20 h-20 md:w-36 md:h-36 bg-green-400 rounded-full blur-3xl animate-float-4"></div>
+        <div className="absolute top-1/3 right-1/2 w-14 h-14 md:w-28 md:h-28 bg-teal-500 rounded-full blur-2xl animate-float-5"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-18 h-18 md:w-32 md:h-32 bg-cyan-400 rounded-full blur-3xl animate-float-6"></div>
+        <div className="absolute top-2/3 right-1/5 w-12 h-12 md:w-20 md:h-20 bg-emerald-400 rounded-full blur-xl animate-float-7"></div>
       </div>
       
-      <div className=" mx-auto px-4 md:px-6 relative z-10 pb-4">
+      <div className="mx-auto px-4 md:px-6 relative z-10">
         <div className="relative">
           <img
             src={isSolarized ? "/Untitled (14) (1).jpg" : "/hero-image.png"}

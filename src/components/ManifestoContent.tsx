@@ -9,6 +9,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [visibleElements, setVisibleElements] = useState<number[]>([]);
+  const [backgroundOffset, setBackgroundOffset] = useState(0);
 
   const manifestoLines = [
     "We are The Chennai Compute Company.",
@@ -25,39 +26,40 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
       setScrollPercentage(scrollPercent);
-      
-      // Debug: log scroll percentage
-      console.log('Scroll percentage:', scrollPercent);
 
       const newVisibleElements: number[] = [];
       
-      // "To the Future," appears at 35%
-      if (scrollPercent >= 35) {
+      // "To the Future," appears at 15%
+      if (scrollPercent >= 15) {
         newVisibleElements.push(0);
       }
         
-      // Each manifesto line appears every 5% starting from 42%
+      // Each manifesto line appears every 8% starting from 25%
       for (let i = 0; i < manifestoLines.length; i++) {
-        const threshold = 42 + (i * 5);
+        const threshold = 25 + (i * 8);
         if (scrollPercent >= threshold) {
           newVisibleElements.push(i + 1);
         }
       }
       
-      // Grey line and images appear at 73%
-      if (scrollPercent >= 73) {
+      // Grey line and images appear at 75%
+      if (scrollPercent >= 75) {
         newVisibleElements.push(manifestoLines.length + 1); // Grey line
         newVisibleElements.push(manifestoLines.length + 2); // Signature
         newVisibleElements.push(manifestoLines.length + 3); // Stamp
+        
+        // Start moving background after 75%
+        const backgroundScrollStart = 75;
+        const backgroundProgress = Math.min((scrollPercent - backgroundScrollStart) / (100 - backgroundScrollStart), 1);
+        setBackgroundOffset(backgroundProgress * 100);
+      } else {
+        setBackgroundOffset(0);
       }
       
       setVisibleElements(newVisibleElements);
-      
-      // Debug: log visible elements
-      console.log('Visible elements:', newVisibleElements);
 
-      // Mark as complete when reaching 80%
-      if (scrollPercent >= 80) {
+      // Mark as complete when reaching 85%
+      if (scrollPercent >= 85) {
         onComplete?.(true);
       }
     };
@@ -69,80 +71,90 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
   }, [manifestoLines.length, onComplete]);
 
   return (
-    <section className={`pt-4 md:pt-8 pb-24 md:pb-40 transition-colors duration-500 ${
+    <section className={`h-[550vh] relative transition-all duration-1000 ease-in-out ${
       isSolarized ? 'bg-solarized-base' : 'bg-black'
     }`}>
-      {/* Letter paper effect - subtle background texture */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200"></div>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 24px,
-            rgba(0,0,0,0.1) 24px,
-            rgba(0,0,0,0.1) 25px
-          )`
-        }}></div>
-      </div>
+      {/* Fixed canvas container */}
+      <div className="sticky top-0 h-screen overflow-hidden">
 
-      <div className="container mx-auto px-4 md:px-6 max-w-4xl relative z-10 py-4 md:py-8">
-        {/* Manifesto Header */}
-        <div className="text-center mb-16 md:mb-24 pb-8 md:pb-12 mt-8 md:mt-12">
-          <h1 className={`font-serif text-2xl md:text-5xl lg:text-6xl font-bold leading-none mb-4 transition-colors duration-500 ${
-            isSolarized ? 'text-red-700' : 'text-white'
-          }`}>
-            <span className={`block text-lg md:text-3xl font-light mb-4 transition-colors duration-500 ${
-              isSolarized ? 'text-orange-600' : 'text-gray-400'
-            }`}>The</span>
-            <span className={`transition-colors duration-500 ${
-              isSolarized ? 'text-red-600' : 'text-emerald-500'
-            }`}>Purpose</span>
-          </h1>
-        </div>
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl relative z-10 h-full flex items-center md:items-start md:pt-20">
         
-        <div className={`border-l-4 pl-4 md:pl-12 py-4 md:py-8 transition-colors duration-500 ${
-          isSolarized ? 'border-red-500' : 'border-green-500'
-        }`}>
-          {/* Letter salutation - appears at 35% */}
-          <p className={`text-lg md:text-xl mb-4 md:mb-8 font-light font-serif transition-all duration-1000 ease-out ${
-            isSolarized ? 'text-orange-600' : 'text-gray-400'
-          } ${visibleElements.includes(0) ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'}`}>
+        <div className="w-full px-4 md:px-8">
+          {/* Purpose Title */}
+          <div className="pb-8 md:pb-12">
+            <h2 className={`font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-none transition-colors duration-500 ${
+              isSolarized ? 'text-red-700' : 'text-white'
+            }`}>
+              <span className={`block text-xl md:text-3xl font-light mb-3 md:mb-4 italic tracking-wide transition-colors duration-500 ${
+                isSolarized ? 'text-solarized-orange' : 'text-gray-400'
+              }`}>The</span> 
+              <span className={`tracking-tight transition-colors duration-500 ${
+                isSolarized ? 'text-red-600' : 'text-emerald-500'
+              }`}>Purpose</span>
+            </h2>
+          </div>
+          {/* Letter salutation - appears at 15% */}
+          <p 
+            className={`text-xl md:text-2xl mb-6 md:mb-10 font-light font-serif ${
+            isSolarized ? 'text-solarized-orange' : 'text-gray-400'
+          } ${visibleElements.includes(0) ? 'opacity-100' : 'opacity-0'}`}
+            style={{
+              transition: 'opacity 2000ms ease-in-out'
+            }}
+          >
             To the Future,
           </p>
           
-          {/* Letter content - each line appears every 5% starting from 42% */}
-          <div className={`space-y-4 md:space-y-8 font-serif tracking-tight transition-colors duration-500 mt-4 md:mt-8 pb-8 md:pb-12 ${
-            isSolarized ? 'text-red-800' : 'text-white'
+          {/* Letter content - each line appears every 8% starting from 25% */}
+          <div className={`space-y-4 md:space-y-8 font-serif tracking-tight transition-colors duration-500 ${
+            isSolarized ? 'text-solarized-text-dark' : 'text-white'
           }`}>
             {manifestoLines.map((line, idx) => (
               <p 
                 key={idx} 
-                className={`text-base md:text-lg leading-relaxed transition-all duration-1000 ease-out ${
-                  visibleElements.includes(idx + 1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                className={`text-lg md:text-xl leading-relaxed min-h-[2rem] md:min-h-[2.5rem] ${
+                  visibleElements.includes(idx + 1) ? 'opacity-100' : 'opacity-0'
                 }`}
+                style={{
+                  transition: 'opacity 2000ms ease-in-out'
+                }}
               >
                 {line}
               </p>
             ))}
           </div>
           
-          {/* Grey separator line - appears at 73% */}
-          <div className={`border-t border-gray-800 my-8 transition-all duration-1000 ease-out ${
-            visibleElements.includes(manifestoLines.length + 1) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-          }`}></div>
+          {/* Grey separator line - appears at 75% */}
+          <div 
+            className={`border-t my-6 md:my-12 ${
+            isSolarized ? 'border-solarized-orange/30' : 'border-gray-800'
+          } ${
+            visibleElements.includes(manifestoLines.length + 1) ? 'opacity-100' : 'opacity-0'
+          }`}
+            style={{
+              transition: 'opacity 2000ms ease-in-out'
+            }}
+          ></div>
           
-          {/* Signature and stamp - appear at 73% */}
-          <div className={`flex items-end justify-between mt-12 transition-all duration-1000 ease-out ${
-            visibleElements.includes(manifestoLines.length + 2) || visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
+          {/* Signature and stamp - appear at 75% */}
+          <div 
+            className={`flex items-end justify-between mt-6 md:mt-12 ${
+            visibleElements.includes(manifestoLines.length + 2) || visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100' : 'opacity-0'
+          }`}
+            style={{
+              transition: 'opacity 2000ms ease-in-out'
+            }}
+          >
                         {/* Signature on the left */}
                         <img
                           src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                           alt="Signature"
-                          className={`h-12 md:h-16 w-auto object-contain transition-all duration-1000 ease-out ${
-                            visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                          className={`h-10 md:h-14 w-auto object-contain ${
+                            visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
                           }`}
+                          style={{
+                            transition: 'opacity 2000ms ease-in-out'
+                          }}
                           onError={(e) => {
                             console.log('Signature image failed to load');
                             e.currentTarget.style.display = 'none';
@@ -152,15 +164,19 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
             <img
               src={isSolarized ? "/Untitled (16) (1).jpg" : "/stamp.jpeg"}
               alt="Official stamp"
-              className={`h-16 md:h-20 w-auto object-contain transition-all duration-1000 ease-out ${
-                visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+              className={`h-12 md:h-16 w-auto object-contain ${
+                visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100' : 'opacity-0'
               }`}
+              style={{
+                transition: 'opacity 2000ms ease-in-out'
+              }}
               onError={(e) => {
                 console.log('Stamp image failed to load');
                 e.currentTarget.style.display = 'none';
               }}
             />
           </div>
+        </div>
         </div>
       </div>
     </section>);
