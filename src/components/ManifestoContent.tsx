@@ -72,7 +72,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
   }, [handleScroll]);
 
   return (
-    <section className={`h-[550vh] relative transition-all duration-1000 ease-in-out ${
+    <section className={`h-[550vh] relative transition-all duration-[800ms] ease-in-out ${
       isSolarized ? 'bg-solarized-base' : 'bg-black'
     }`}>
       {/* Fixed canvas container */}
@@ -83,13 +83,13 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
         <div className="w-full px-4 md:px-8">
           {/* Purpose Title */}
           <div className="pb-8 md:pb-12">
-            <h2 className={`font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-none transition-colors duration-500 ${
+            <h2 className={`font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-none transition-colors duration-[800ms] ease-in-out ${
               isSolarized ? 'text-red-700' : 'text-white'
             }`}>
-              <span className={`block text-xl md:text-3xl font-light mb-3 md:mb-4 italic tracking-wide transition-colors duration-500 ${
+              <span className={`block text-xl md:text-3xl font-light mb-3 md:mb-4 italic tracking-wide transition-colors duration-[800ms] ease-in-out ${
                 isSolarized ? 'text-solarized-orange' : 'text-gray-400'
               }`}>The</span> 
-              <span className={`tracking-tight transition-colors duration-500 ${
+              <span className={`tracking-tight transition-colors duration-[800ms] ease-in-out ${
                 isSolarized ? 'text-red-600' : 'text-emerald-500'
               }`}>Purpose</span>
             </h2>
@@ -107,7 +107,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           </p>
           
           {/* Letter content - each line appears every 8% starting from 25% */}
-          <div className={`space-y-4 md:space-y-8 font-serif tracking-tight transition-colors duration-500 ${
+          <div className={`space-y-4 md:space-y-8 font-serif tracking-tight transition-colors duration-[800ms] ease-in-out ${
             isSolarized ? 'text-solarized-text-dark' : 'text-white'
           }`}>
             {manifestoLines.map((line, idx) => (
@@ -139,7 +139,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           
           {/* Signature and stamp - appear at 75% */}
           <div 
-            className={`flex items-end justify-between mt-6 md:mt-12 ${
+            className={`flex items-end justify-between mt-8 mb-12 md:mt-12 md:mb-16 pb-8 md:pb-0 ${
             visibleElements.includes(manifestoLines.length + 2) || visibleElements.includes(manifestoLines.length + 3) ? 'opacity-100' : 'opacity-0'
           }`}
             style={{
@@ -150,7 +150,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                         <img
                           src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                           alt="Signature"
-                          className={`h-10 md:h-14 w-auto object-contain ${
+                          className={`h-12 md:h-14 w-auto object-contain ${
                             visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
                           }`}
                           style={{
