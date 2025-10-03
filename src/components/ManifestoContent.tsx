@@ -162,21 +162,21 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           
           {/* Signature - appears at 75% */}
           <div 
-            className={`mb-6 md:mb-0 ${
+            className={`mb-16 md:mb-8 ${
             visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
           }`}
             style={{
               transition: 'opacity 2000ms ease-in-out'
             }}
           >
-            {/* Signature - slightly smaller for better visibility */}
-            <div className="flex items-center justify-start py-4">
+            {/* Signature - appropriately sized for mobile and desktop */}
+            <div className="flex items-center justify-start py-2 md:py-3">
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
                 loading="lazy"
                 decoding="async"
-                className={`h-12 md:h-16 lg:h-20 w-auto object-contain`}
+                className={`h-10 md:h-14 lg:h-16 w-auto object-contain`}
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
