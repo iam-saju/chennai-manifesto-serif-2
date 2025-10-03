@@ -76,16 +76,16 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
         isSolarized ? 'bg-solarized-base' : 'bg-black'
     }`}>
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, ${
-            isSolarized ? 'rgb(220, 50, 47)' : 'rgb(251, 146, 60)'
+            isSolarized ? 'rgb(220, 50, 47)' : 'rgb(220, 50, 47)'
           } 1px, transparent 0)`,
           backgroundSize: '20px 20px'
         }}></div>
         <div className="absolute inset-0" style={{
           backgroundImage: `linear-gradient(90deg, transparent 0%, ${
-            isSolarized ? 'rgba(220, 50, 47, 0.1)' : 'rgba(251, 146, 60, 0.1)'
+            isSolarized ? 'rgba(220, 50, 47, 0.1)' : 'rgba(220, 50, 47, 0.1)'
           } 50%, transparent 100%)`,
           backgroundSize: '100px 1px',
           backgroundRepeat: 'repeat-y',
@@ -159,7 +159,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           
           {/* Signature - appears at 75% */}
           <div 
-            className={`relative z-20 ${
+            className={`${
             visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
           }`}
             style={{
@@ -167,7 +167,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
             }}
           >
             {/* Signature on the left - slightly bigger and vertically aligned */}
-            <div className="flex items-center mt-2 mb-8 md:mb-0">
+            <div className="flex items-center">
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
@@ -196,7 +196,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 {/* Corner Mandalas */}
                 {/* Top Left Corner */}
                 <div className={`absolute -top-4 -left-4 w-24 h-24 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-orange-600'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-60`}>
                   <svg viewBox="0 0 96 96" className="w-full h-full">
                     {/* Radiating dot pattern - 3 rings */}
@@ -227,7 +227,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 
                 {/* Top Right Corner */}
                 <div className={`absolute -top-4 -right-4 w-24 h-24 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-orange-600'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-60`}>
                   <svg viewBox="0 0 96 96" className="w-full h-full">
                     <circle cx="48" cy="48" r="3" fill="currentColor" opacity="0.9"/>
@@ -254,7 +254,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 
                 {/* Bottom Left Corner */}
                 <div className={`absolute -bottom-4 -left-4 w-24 h-24 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-orange-600'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-60`}>
                   <svg viewBox="0 0 96 96" className="w-full h-full">
                     <circle cx="48" cy="48" r="3" fill="currentColor" opacity="0.9"/>
@@ -281,7 +281,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 
                 {/* Bottom Right Corner */}
                 <div className={`absolute -bottom-4 -right-4 w-24 h-24 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-orange-600'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-60`}>
                   <svg viewBox="0 0 96 96" className="w-full h-full">
                     <circle cx="48" cy="48" r="3" fill="currentColor" opacity="0.9"/>
@@ -309,7 +309,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 {/* Flowing Border Dots */}
                 {/* Top Border */}
                 <div className={`absolute -top-2 left-16 right-16 h-6 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-amber-500'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-50`}>
                   <svg viewBox="0 0 300 24" className="w-full h-full">
                     <circle cx="20" cy="12" r="2" fill="currentColor" opacity="0.7"/>
@@ -331,7 +331,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 
                 {/* Bottom Border */}
                 <div className={`absolute -bottom-2 left-16 right-16 h-6 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-amber-500'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-50`}>
                   <svg viewBox="0 0 300 24" className="w-full h-full">
                     <circle cx="20" cy="12" r="2" fill="currentColor" opacity="0.7"/>
@@ -353,7 +353,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 
                 {/* Left Border */}
                 <div className={`absolute -left-2 top-16 bottom-16 w-6 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-amber-500'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-50`}>
                   <svg viewBox="0 0 24 200" className="w-full h-full">
                     <circle cx="12" cy="20" r="2" fill="currentColor" opacity="0.7"/>
@@ -370,7 +370,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 
                 {/* Right Border */}
                 <div className={`absolute -right-2 top-16 bottom-16 w-6 ${
-                  isSolarized ? 'text-solarized-orange' : 'text-amber-500'
+                  isSolarized ? 'text-solarized-orange' : 'text-yellow-300'
                 } opacity-50`}>
                   <svg viewBox="0 0 24 200" className="w-full h-full">
                     <circle cx="12" cy="20" r="2" fill="currentColor" opacity="0.7"/>
@@ -387,7 +387,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                 
                 {/* Inner Halo - Delicate gold dots around stamp */}
                 <div className={`absolute inset-8 ${
-                  isSolarized ? 'text-solarized-yellow' : 'text-yellow-400'
+                  isSolarized ? 'text-solarized-yellow' : 'text-yellow-600'
                 } opacity-40`}>
                   <svg viewBox="0 0 200 200" className="w-full h-full">
                     {/* Small scattered dots around stamp perimeter */}
