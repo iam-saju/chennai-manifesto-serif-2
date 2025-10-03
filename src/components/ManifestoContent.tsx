@@ -169,14 +169,14 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
               transition: 'opacity 2000ms ease-in-out'
             }}
           >
-            {/* Signature - prominently displayed */}
+            {/* Signature - slightly smaller for better visibility */}
             <div className="flex items-center justify-start py-4">
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
                 loading="lazy"
                 decoding="async"
-                className={`h-16 md:h-20 lg:h-24 w-auto object-contain`}
+                className={`h-12 md:h-16 lg:h-20 w-auto object-contain`}
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
