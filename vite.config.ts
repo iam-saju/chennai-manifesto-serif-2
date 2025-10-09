@@ -103,6 +103,10 @@ export default defineConfig(({ mode }) => ({
     },
     // Enable source maps for production debugging (optional)
     sourcemap: false,
+    // Optimize for Netlify
+    outDir: 'dist',
+    assetsDir: 'assets',
+    emptyOutDir: true,
   },
   // Optimize dependencies
   optimizeDeps: {
