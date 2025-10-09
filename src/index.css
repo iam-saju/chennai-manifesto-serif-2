@@ -14,6 +14,10 @@ All colors MUST be HSL.
     text-rendering: optimizeLegibility;
   }
   
+  body {
+    overflow-x: hidden;
+  }
+  
   :root {
     --background: 0 0% 4%;
     --foreground: 0 0% 98%;
@@ -181,5 +185,32 @@ All colors MUST be HSL.
   .animate-float-7 { 
     animation: float-7 17s ease-in-out infinite; 
     will-change: transform;
+  }
+  
+  /* Mobile-specific improvements */
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    /* Improve touch targets */
+    button, input, a {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Better text rendering on mobile */
+    p, span, div {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  @media (max-width: 1024px) {
+    * {
+      max-width: 100%;
+    }
   }
 }

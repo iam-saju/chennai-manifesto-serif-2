@@ -20,25 +20,44 @@ const ManifestoHero = ({ isSolarized = false }: ManifestoHeroProps) => {
         <div className="absolute top-2/3 right-1/5 w-12 h-12 md:w-20 md:h-20 bg-emerald-400 rounded-full blur-xl animate-float-7"></div>
       </div>
       
-      <div className="mx-auto px-4 md:px-6 relative z-10">
-        <div className="relative">
-          <img
-            src={isSolarized ? "/Untitled (14) (1).jpg" : "/hero-image.png"}
-            alt="The Chennai Compute Company"
-            loading="eager"
-            decoding="async"
-            className="w-32 h-32 md:w-72 md:h-72 object-contain" />
+      <div className="mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+        <div className="flex flex-col items-center space-y-6 md:space-y-8">
+          <div className="relative">
+            <img
+              src={isSolarized ? "/Untitled (14) (1).jpg" : "/hero-image.png"}
+              alt="The Chennai Compute Company"
+              loading="eager"
+              decoding="async"
+              className="w-40 h-40 md:w-64 md:h-64 lg:w-72 lg:h-72 object-contain transition-opacity duration-500"
+              onError={(e) => {
+                console.warn('Hero logo image failed to load');
+                e.currentTarget.style.display = 'none';
+              }}
+              onLoad={(e) => {
+                e.currentTarget.style.opacity = '1';
+              }}
+              style={{ opacity: 0 }}
+            />
+          </div>
+          
+          <div className="w-full flex justify-center">
+            <img
+              src="/765d4ab84d3609432554d5ef5e0df07a (1).jpg"
+              alt="The Chennai Compute Company - Digital Connection"
+              loading="eager"
+              decoding="async"
+              className="w-full max-w-sm md:max-w-2xl lg:max-w-3xl h-auto object-contain rounded-lg shadow-2xl shadow-black/50 hover:shadow-3xl hover:shadow-black/70 transition-all duration-500"
+              onError={(e) => {
+                console.warn('Hero main image failed to load');
+                e.currentTarget.style.display = 'none';
+              }}
+              onLoad={(e) => {
+                e.currentTarget.style.opacity = '1';
+              }}
+              style={{ opacity: 0 }}
+            />
+          </div>
         </div>
-        
-        <div className="">
-          <img
-            src="/765d4ab84d3609432554d5ef5e0df07a (1).jpg"
-            alt="The Chennai Compute Company - Digital Connection"
-            loading="eager"
-            decoding="async"
-            className="w-full max-w-sm md:max-w-3xl h-auto object-contain rounded-lg shadow-2xl shadow-black/50 hover:shadow-3xl hover:shadow-black/70 transition-shadow duration-300" />
-        </div>
-        
       </div>
     </section>);
 };

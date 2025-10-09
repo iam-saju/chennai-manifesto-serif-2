@@ -101,15 +101,15 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
 
         <div className="container mx-auto px-4 md:px-6 max-w-7xl relative z-10 h-full flex items-center justify-center">
         
-        <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12 items-center">
           {/* Mobile: Stamp first, Desktop: Content first */}
           <div className="lg:col-span-2 flex flex-col justify-center max-w-2xl order-2 lg:order-1">
           {/* Purpose Title */}
-          <div className="pb-4 md:pb-12">
-            <h2 className={`font-serif text-2xl md:text-5xl lg:text-6xl font-bold leading-none transition-colors duration-800 ease-in-out ${
+          <div className="pb-6 md:pb-8 lg:pb-12">
+            <h2 className={`font-serif text-3xl md:text-5xl lg:text-6xl font-bold leading-tight transition-colors duration-800 ease-in-out ${
               isSolarized ? 'text-solarized-blue' : 'text-white'
             }`}>
-              <span className={`block text-sm md:text-2xl font-light mb-2 md:mb-4 italic tracking-wide transition-colors duration-800 ease-in-out ${
+              <span className={`block text-base md:text-2xl font-light mb-3 md:mb-4 italic tracking-wide transition-colors duration-800 ease-in-out ${
                 isSolarized ? 'text-solarized-orange' : 'text-gray-400'
               }`}>The</span> 
               <span className={`tracking-tight transition-colors duration-800 ease-in-out ${
@@ -119,7 +119,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           </div>
           {/* Letter salutation - appears at 15% */}
           <p 
-            className={`text-base md:text-xl mb-4 md:mb-12 font-light font-serif leading-relaxed ${
+            className={`text-lg md:text-xl mb-6 md:mb-8 lg:mb-12 font-light font-serif leading-relaxed ${
             isSolarized ? 'text-solarized-orange' : 'text-gray-300'
           } ${visibleElements.includes(0) ? 'opacity-100' : 'opacity-0'}`}
             style={{
@@ -130,13 +130,13 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           </p>
           
           {/* Letter content - each line appears every 8% starting from 25% */}
-          <div className={`space-y-2 md:space-y-6 font-serif tracking-tight transition-colors duration-800 ease-in-out ${
+          <div className={`space-y-4 md:space-y-6 font-serif tracking-tight transition-colors duration-800 ease-in-out ${
             isSolarized ? 'text-solarized-orange' : 'text-gray-200'
           }`}>
             {manifestoLines.map((line, idx) => (
               <p 
                 key={idx} 
-                className={`text-xs md:text-lg leading-loose min-h-[1.5rem] md:min-h-[2.5rem] ${
+                className={`text-sm md:text-lg leading-relaxed min-h-[2rem] md:min-h-[2.5rem] ${
                   visibleElements.includes(idx + 1) ? 'opacity-100' : 'opacity-0'
                       }`}
                       style={{
@@ -150,7 +150,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
 
           {/* Grey separator line - appears at 75% */}
           <div 
-            className={`border-t mb-3 mt-6 md:my-12 ${
+            className={`border-t mb-4 mt-8 md:my-12 ${
             isSolarized ? 'border-solarized-orange/30' : 'border-gray-800'
           } ${
             visibleElements.includes(manifestoLines.length + 1) ? 'opacity-100' : 'opacity-0'
@@ -162,7 +162,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
           
           {/* Signature - appears at 75% */}
           <div 
-            className={`mt-0 mb-16 md:mt-0 md:mb-8 ${
+            className={`mt-0 mb-8 md:mt-0 md:mb-8 ${
             visibleElements.includes(manifestoLines.length + 2) ? 'opacity-100' : 'opacity-0'
           }`}
             style={{
@@ -170,16 +170,21 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
             }}
           >
             {/* Signature - appropriately sized for mobile and desktop */}
-            <div className="flex items-center justify-start py-0 md:py-3">
+            <div className="flex items-center justify-start py-2 md:py-3">
               <img
                 src={isSolarized ? "/Gemini_Generated_Image_bn95dhbn95dhbn95.png" : "/chensign.jpeg"}
                 alt="Signature"
                 loading="lazy"
                 decoding="async"
-                className={`h-10 md:h-14 lg:h-16 w-auto object-contain`}
+                className={`h-12 md:h-14 lg:h-16 w-auto object-contain transition-opacity duration-300`}
                 onError={(e) => {
+                  console.warn('Signature image failed to load');
                   e.currentTarget.style.display = 'none';
                 }}
+                onLoad={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                }}
+                style={{ opacity: 0 }}
               />
             </div>
           </div>
@@ -197,7 +202,7 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
               }}
             >
               {/* Bandhani Dot Pattern Frame */}
-              <div className="relative p-8">
+              <div className="relative p-4 md:p-6 lg:p-8">
                 {/* Corner Mandalas */}
                 {/* Top Left Corner */}
                 <div className={`absolute -top-4 -left-4 w-24 h-24 ${
@@ -417,10 +422,15 @@ const ManifestoContent = ({ onComplete, isSolarized = false }: ManifestoContentP
                   alt="Official stamp"
                   loading="lazy"
                   decoding="async"
-                  className={`h-72 md:h-96 lg:h-[28rem] w-auto object-contain max-w-full drop-shadow-lg hover:scale-110 hover:drop-shadow-2xl transition-all duration-300 cursor-pointer relative z-10`}
+                  className={`h-64 md:h-80 lg:h-96 xl:h-[28rem] w-auto object-contain max-w-full drop-shadow-lg hover:scale-105 hover:drop-shadow-2xl transition-all duration-300 cursor-pointer relative z-10`}
                 onError={(e) => {
+                  console.warn('Stamp image failed to load');
                   e.currentTarget.style.display = 'none';
                 }}
+                onLoad={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                }}
+                style={{ opacity: 0 }}
               />
               </div>
             </div>
